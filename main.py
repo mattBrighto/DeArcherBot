@@ -5,7 +5,7 @@ runStarted = time.perf_counter()
 bot = discord.Bot()
 UserMatt = bot.get_or_fetch_user(650343691998855188)
 meMention = '<@650343691998855188>'
-file = open('Z:/token.txt', "r")
+file = open('token.txt', "r")
 token = file.read()
 file.close()
 
@@ -22,7 +22,7 @@ async def ping(ctx):
     msg = discord.Embed(title="PING Request", color=0xE06666)
     msg.remove_author()
     secs = abs(runStarted - time.perf_counter())
-    runtiming = time.strftime("%H:%M:%S", time.gmtime(secs))
+    runtiming = time.strftime("%H godzin %M minut %S sekund", time.gmtime(secs))
     msg.add_field(name='------------', value=f'Jestem online, a mój ping wynosi ``{round(bot.latency * 1000)} ms``\nJestem włączony od : ``{runtiming}``', inline=False)
     await ctx.respond(embed=msg)
 
@@ -32,8 +32,8 @@ async def info(ctx):
     msg.remove_author()
     msg.add_field(name='Basic Info', value=f'Hej jestem {meMention}. Zrobiłem tego bota For Fun, ale jeśli chciałbyś, abym wykonał jakiś projekt informatyczny/programistyczny skorzystaj z komendy /contact (oczywiście z odpowiednim prefixem) żeby się ze mną skontaktować')
     secs = abs(runStarted - time.perf_counter())
-    runtiming = time.strftime("%H:%M:%S", time.gmtime(secs))
-    msg.add_field(name='Info Bota', value=f'``runtime:``   {runtiming}')
+    runtiming = time.strftime("%H godzin %M minut %S sekund", time.gmtime(secs))
+    msg.add_field(name='Info Bota', value=f'``runtime:``   {runtiming}\n ``ping`` :	{round(bot.latency * 1000) ms}')
     msg.add_field(name='Linki', value='``PERSONAL SITE``   https://mc.polishwrona.pl/', inline=False)
     await ctx.respond(embed=msg)
 
@@ -45,7 +45,7 @@ async def contact(ctx, msg):
     else:
         global meUser
         dm = await meUser.create_dm()
-        await dm.send(f'Nowa wiadomość od {ctx.author.mention}: '+msg)
+        await dm.send(f'New message from {ctx.author.mention}: '+msg)
         list.append(ctx.author.id)
         await ctx.respond(f"||{ctx.author.mention}|| Twoja wiadomość została wysłana")
 
@@ -77,8 +77,8 @@ async def logout(ctx):
         msg = discord.Embed(title='Disconnecting.....', color=0x723535)
         msg.remove_author
         secs = abs(runStarted - time.perf_counter())
-        runtiming = time.strftime("%H:%M:%S", time.gmtime(secs))
-        msg.add_field(name='------------------', value=f'{ctx.author.mention}, you ended me :< \n I have run for : ``{runtiming}``\nMy latancy is : ``{round(bot.latency * 1000)}`` \n D1sScoo0nneCt1ing....', inline=True)
+        runtiming = time.strftime("%H godzin %M minut %S sekund", time.gmtime(secs))
+        msg.add_field(name='------------------', value=f'{ctx.author.mention}, wylogowałeś mnie :< \n Byłem włączony przez : ``{runtiming}``\nMój ping wynosi : ``{round(bot.latency * 1000)}`` \n D1sScoo0nneCt1ing....', inline=True)
         await ctx.respond(embed=msg)
         print("\n\n\n\nDISCONNECTING\n\n\n\n")
         await discord.Client.close(bot)
