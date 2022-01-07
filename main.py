@@ -33,7 +33,7 @@ async def info(ctx):
     msg.add_field(name='Basic Info', value=f'Hej jestem {meMention}. Zrobiłem tego bota For Fun, ale jeśli chciałbyś, abym wykonał jakiś projekt informatyczny/programistyczny skorzystaj z komendy /contact (oczywiście z odpowiednim prefixem) żeby się ze mną skontaktować')
     secs = abs(runStarted - time.perf_counter())
     runtiming = time.strftime("%H godzin %M minut %S sekund", time.gmtime(secs))
-    msg.add_field(name='Info Bota', value=f'``runtime:``   {runtiming}\n ``ping`` :	{round(bot.latency * 1000) ms}')
+    msg.add_field(name='Info Bota', value=f'``runtime:``   {runtiming}\n ``ping`` :	{round(bot.latency * 1000)}  ms')
     msg.add_field(name='Linki', value='``PERSONAL SITE``   https://mc.polishwrona.pl/', inline=False)
     await ctx.respond(embed=msg)
 
