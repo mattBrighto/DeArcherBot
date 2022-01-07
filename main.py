@@ -5,7 +5,7 @@ runStarted = time.perf_counter()
 bot = discord.Bot()
 UserMatt = bot.get_or_fetch_user(650343691998855188)
 meMention = '<@650343691998855188>'
-file = open('token.txt', "r")
+file = open('Z:/token.txt', "r")
 token = file.read()
 file.close()
 
