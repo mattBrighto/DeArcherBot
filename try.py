@@ -7,6 +7,10 @@ txt = open('token.txt', "r")
 token = txt.read()
 txt.close()
 
+@bot.message_command()
+async def Mention(ctx):
+    ctx.send(ctx.message.author.mention)
+
 @bot.slash_command()
 async def hello(ctx, name: str = None):
     name = name or ctx.author.name
