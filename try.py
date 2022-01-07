@@ -22,7 +22,7 @@ async def hi(ctx, user):
 
 @bot.command()
 async def logout(ctx):
-    if ctx.author.is_owner():
+    if ctx.author.id == 650343691998855188:
         await ctx.send(f"bye... {ctx.author}, you ended me :<")
         await ctx.send(f"Status : {discord.Client.status}")
         await ctx.send(f"Bot ping : {bot.latency}")
