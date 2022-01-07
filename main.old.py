@@ -1,14 +1,13 @@
-import discord, time, datetime
+import discord, time
 from discord.ext import commands
 runStarted = time.perf_counter()
-bot = commands.Bot(command_prefix='/')
-client = discord.Client()
+bot = discord.Bot()
 meMention = '<@650343691998855188>'
-file = open('token.txt', "r")
+file = open('Z:/token.txt', "r")
 token = file.read()
 file.close()
 
-@client.event
+@bot.event
 async def on_ready():
     print("The prefix is /")
     print('Bot is currently: Online')
@@ -55,9 +54,20 @@ async def clear(ctx, x):
 @bot.command()
 async def clock(ctx):
     msg = discord.Embed(title="Zegar", color=0xFFFFFF)
-    msg.set_author(name  = ctx.author.display_name, icon_url=ctx.author.avatar_url)
+    msg.set_author(name= ctx.author.name, icon_url= str(ctx.author.display_avatar))
     msg.set_thumbnail(url="https://mc.polishwrona.pl/clock.png")
     msg.add_field(name=time.strftime("%H:%M"), value="-------", inline=False)
     await ctx.respond(embed=msg)
+
+@bot.command()
+async def logout(ctx):
+    if ctx.author.id == 650343691998855188:
+        await ctx.send(f"bye... {ctx.author.mention}, you ended me :<")
+        await ctx.respond(f"Status : disconnecting")
+        await ctx.send(f"Bot ping : {round(bot.latency  * 1000)} ms")
+        print("\n\n\n\nDISCONNECTING\n\n\n\n")
+        await discord.Client.close(bot)
+    else:
+        ctx.respond("You don't have the permission to do that", delet_after=1)
 
 bot.run(token)

@@ -24,7 +24,7 @@ async def hi(ctx, user):
 async def logout(ctx):
     if ctx.author.id == 650343691998855188:
         await ctx.send(f"bye... {ctx.author.mention}, you ended me :<")
-        await ctx.send(f"Status : disconnecting")
+        await ctx.respond(f"Status : disconnecting")
         await ctx.send(f"Bot ping : {round(bot.latency  * 1000)} ms")
         print("\n\n\n\nDISCONNECTING\n\n\n\n")
         await discord.Client.close(bot)
