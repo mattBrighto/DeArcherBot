@@ -20,4 +20,12 @@ async def hello(ctx, name: str = None):
 async def hi(ctx, user):
     await ctx.respond(f"{ctx.author.mention} says hello to {user.name}!")
 
+@bot.command()
+async def logout(ctx):
+    await ctx.send(f"bye... {ctx.author}, you ended me :<")
+    await ctx.send(f"Status : {discord.Client.status}")
+    await ctx.send(f"Bot ping : {bot.latency}")
+    print("\n\n\n\nDISCONNECTING\n\n\n\n")
+    await discord.Client.close(bot)
+
 bot.run(token)

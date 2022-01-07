@@ -58,6 +58,6 @@ async def clock(ctx):
     msg.set_author(name  = ctx.author.display_name, icon_url=ctx.author.avatar_url)
     msg.set_thumbnail(url="https://mc.polishwrona.pl/clock.png")
     msg.add_field(name=time.strftime("%H:%M"), value="-------", inline=False)
-    await ctx.send(embed=msg)
+    await ctx.respond(embed=msg)
 
 bot.run(token)
