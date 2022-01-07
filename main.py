@@ -1,6 +1,8 @@
 from typing_extensions import runtime
 import discord, time, logging
 from discord.ext import commands
+from discord.user import User
+from discord.app import Option
 
 #logging
 logging.basicConfig(level=logging.INFO)
@@ -63,7 +65,7 @@ async def contact(ctx, msg):
 @bot.command()
 async def say(ctx, msg):
     if ctx.author.id != 650343691998855188:
-        await ctx.respond("Nie masz wystarczających uprawnień :<", delete_after = .5)
+        await ctx.respond("Nie masz wystarczających uprawnień :<", delete_after = 1)
     if ctx.author.id == 650343691998855188:
         await ctx.send(msg)
         
@@ -86,7 +88,7 @@ async def clock(ctx):
 @bot.command()
 async def logout(ctx):
     if ctx.author.id != 650343691998855188:
-        ctx.respond("Nie masz wystarczających uprawnień :<", delet_after=1)
+        await ctx.respond("Nie masz wystarczających uprawnień :<", delete_after=1)
     if ctx.author.id == 650343691998855188:
         msg = discord.Embed(title='Disconnecting.....', color=0x723535)
         msg.remove_author
@@ -96,5 +98,18 @@ async def logout(ctx):
         await ctx.respond(embed=msg)
         print("\n\n\n\nDISCONNECTING\n\n\n\n")
         await discord.Client.close(bot)
+
+#Moderation
+#
+#
+#
+#
+@bot.command()
+async def ban(ctx, 
+                user: Option(User, 'Użytkownik do zbanowania'),
+                reason: Option(str, 'Powód bana')):
+    await user.ban()
+    await ctx.respond(f'Użytkownik {user}, zostałx zbanowanx')
+
 
 bot.run(token)
