@@ -8,8 +8,8 @@ token = txt.read()
 txt.close()
 
 @bot.message_command()
-async def Mention(ctx):
-    ctx.send(ctx.message.author.mention)
+async def Mention(ctx, message):
+    await ctx.respond(message.author.mention)
 
 @bot.slash_command()
 async def hello(ctx, name: str = None):
