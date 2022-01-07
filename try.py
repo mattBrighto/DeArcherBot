@@ -3,7 +3,7 @@ from discord.ext import commands
 
 bot = discord.Bot()
 
-txt = open('token.txt', "r")
+txt = open('Z:/token.txt', "r")
 token = txt.read()
 txt.close()
 
@@ -22,10 +22,13 @@ async def hi(ctx, user):
 
 @bot.command()
 async def logout(ctx):
-    await ctx.send(f"bye... {ctx.author}, you ended me :<")
-    await ctx.send(f"Status : {discord.Client.status}")
-    await ctx.send(f"Bot ping : {bot.latency}")
-    print("\n\n\n\nDISCONNECTING\n\n\n\n")
-    await discord.Client.close(bot)
+    if ctx.author.is_owner():
+        await ctx.send(f"bye... {ctx.author}, you ended me :<")
+        await ctx.send(f"Status : {discord.Client.status}")
+        await ctx.send(f"Bot ping : {bot.latency}")
+        print("\n\n\n\nDISCONNECTING\n\n\n\n")
+        await discord.Client.close(bot)
+    else:
+        ctx.send("You don't have the permission to do that", delet_after=1)
 
 bot.run(token)
