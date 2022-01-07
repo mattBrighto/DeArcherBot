@@ -45,7 +45,7 @@ async def contact(ctx, msg):
     else:
         global meUser
         dm = await meUser.create_dm()
-        await dm.send(f'New message from {ctx.author.mention}: '+msg)
+        await dm.send(f'Nowa wiadomość od {ctx.author.mention}: '+msg)
         list.append(ctx.author.id)
         await ctx.respond(f"||{ctx.author.mention}|| Twoja wiadomość została wysłana")
 
