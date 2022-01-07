@@ -1,7 +1,9 @@
+from typing_extensions import runtime
 import discord, time
 from discord.ext import commands
 runStarted = time.perf_counter()
 bot = discord.Bot()
+UserMatt = bot.get_or_fetch_user(650343691998855188)
 meMention = '<@650343691998855188>'
 file = open('Z:/token.txt', "r")
 token = file.read()
@@ -9,12 +11,20 @@ file.close()
 
 @bot.event
 async def on_ready():
+    global meUser
+    meUser = await bot.get_or_fetch_user(650343691998855188)
     print("The prefix is /")
     print('Bot is currently: Online')
+    print(type(meUser))
 
 @bot.command()
 async def ping(ctx):
-    await ctx.send(ctx.author.mention + ', Jestem online! PONG 🏓')
+    msg = discord.Embed(title="PING Request", color=0xE06666)
+    msg.remove_author()
+    secs = abs(runStarted - time.perf_counter())
+    runtiming = time.strftime("%H:%M:%S", time.gmtime(secs))
+    msg.add_field(name='------------', value=f'Jestem online, a mój ping wynosi ``{round(bot.latency * 1000)} ms``\nJestem włączony od : ``{runtiming}``', inline=False)
+    await ctx.respond(embed=msg)
 
 @bot.command()  
 async def info(ctx):
@@ -25,31 +35,33 @@ async def info(ctx):
     runtiming = time.strftime("%H:%M:%S", time.gmtime(secs))
     msg.add_field(name='Info Bota', value=f'``runtime:``   {runtiming}')
     msg.add_field(name='Linki', value='``PERSONAL SITE``   https://mc.polishwrona.pl/', inline=False)
-    await ctx.send(embed=msg)
+    await ctx.respond(embed=msg)
 
 @bot.command()
 async def contact(ctx, msg):
     list = []
-    if ctx.message.author.id in list:
-        await ctx.send("Musisz zaczekać zanim wyślesz kolejną wiadomość", delete_after = 2)
+    if ctx.author.id in list:
+        await ctx.respond("Musisz zaczekać zanim wyślesz kolejną wiadomość", delete_after = 1)
     else:
-        global bot
-        meUser = bot.fetch_user(65034369199885518)
-        meDM = meUser.create_dm()
-        await meDM.send(f'New message from {ctx.author.mention}: '+msg)
+        global meUser
+        dm = await meUser.create_dm()
+        await dm.send(f'New message from {ctx.author.mention}: '+msg)
+        list.append(ctx.author.id)
+        await ctx.respond(f"||{ctx.author.mention}|| Twoja wiadomość została wysłana")
 
 
 @bot.command()
 async def say(ctx, msg):
     if ctx.author.id == 650343691998855188:
+        #await ctx.respond(".", delete_after=0.1)
         await ctx.send(msg)
     else:
-        await ctx.send("Nie masz wystarczających uprawnień :<", delete_after = 2)
+        await ctx.respond("Nie masz wystarczających uprawnień :<", delete_after = 1)
 
 @bot.command()
 async def clear(ctx, x):
     await ctx.channel.purge(limit=int(x))
-    await ctx.send(f'Pomyślnie usunięto {x} wiadomości!', delete_after = 2)
+    await ctx.respond(f'Pomyślnie usunięto {x} wiadomości!', delete_after = 1)
 
 @bot.command()
 async def clock(ctx):
@@ -62,12 +74,15 @@ async def clock(ctx):
 @bot.command()
 async def logout(ctx):
     if ctx.author.id == 650343691998855188:
-        await ctx.send(f"bye... {ctx.author.mention}, you ended me :<")
-        await ctx.respond(f"Status : disconnecting")
-        await ctx.send(f"Bot ping : {round(bot.latency  * 1000)} ms")
+        msg = discord.Embed(title='Disconnecting.....', color=0x723535)
+        msg.remove_author
+        secs = abs(runStarted - time.perf_counter())
+        runtiming = time.strftime("%H:%M:%S", time.gmtime(secs))
+        msg.add_field(name='------------------', value=f'{ctx.author.mention}, you ended me :< \n I have run for : ``{runtiming}``\nMy latancy is : ``{round(bot.latency * 1000)}`` \n D1sScoo0nneCt1ing....', inline=True)
+        await ctx.respond(embed=msg)
         print("\n\n\n\nDISCONNECTING\n\n\n\n")
         await discord.Client.close(bot)
     else:
-        ctx.respond("You don't have the permission to do that", delet_after=1)
+        ctx.respond("Nie masz wystarczających uprawnień :<", delet_after=1)
 
 bot.run(token)
