@@ -1,6 +1,9 @@
 from asyncio import events
+import datetime
+from os import remove
 import discord, time, logging
 from discord import client
+from discord import user
 from discord.ext import commands
 from discord.member import Member
 from discord.user import User
@@ -27,12 +30,38 @@ async def on_ready():
     global meUser
     meUser = await bot.get_or_fetch_user(650343691998855188)
     print("The prefix is /")
-    print(f'{bot.user.name} is currently: Online')
+    print(f'{bot.user.name} is currently: {bot.status}')
 
 @bot.command()
-async def ban(ctx, user: Option(Member, 'Użytkownik do zbanowania'), rsn: Option(str, 'Powód bana')):
-    await user.ban(delete_message_days=0, reason=rsn)
-    await ctx.respond(f'🔨 Użytkownik {user.mention}, zostałx zbanowanx')
+async def unban(ctx, user: Option(Member, 'Użytkownik do zbanowania'), rsn: Option(str, 'Powód bana')):
+    who = await bot.get_or_fetch_user(user)
+    dm = await who.create_dm()
+    await ctx.guild.unban(user=who,reason=rsn)
+    msg = discord.Embed(title='UNBAN', color=0xCFF1EA)
+    msg.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
+    msg.add_field(name=f'🔨 Użytkownik {who.display_name} został obanowany 🔨', value=f'Odbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód unbana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
+    await ctx.respond(f'||{who.mention}||',embed=msg)
+    
+
+
+@bot.command()
+async def ban(ctx, user: Option(discord.Member, 'Użytkownik do zbanowania'), rsn: Option(str, 'Powód bana') = "nie uwzględniono"):
+    who = await bot.get_or_fetch_user(user)
+    #await ctx.send(f'argument : {user}\n argument-type : {type(user)}\n')# who : {who}\n who-type : {type(who)}')
+    try:
+        await who.send(f'||{who.mention}||')
+    except:
+        await ctx.send('Nie mogę napisać do użytkownika... Możliwe ,że nie ma go na serwerze lub nie dzielimy żadnych serwerów, ale i tak go zbanuję')
+    else:
+        dmMsg = discord.Embed(title='BAN', color=0x990000)
+        dmMsg.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
+        dmMsg.add_field(name=f'🔨 {who.display_name} zostałxś zbanowany 🔨', value=f'Zbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód bana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
+        await who.send(f'||{who.mention}||',embed=dmMsg)
+    await ctx.guild.ban(user=who, delete_message_days=0, reason=rsn)
+    msg = discord.Embed(title='BAN', color=0x990000)
+    msg.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
+    msg.add_field(name=f'🔨 Użytkownik {who.display_name} został zbanowany 🔨', value=f'Zbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód bana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
+    await ctx.respond(f'||{who.mention}||',embed=msg)
 
 @bot.command()
 async def help(ctx):
@@ -86,6 +115,10 @@ async def say(ctx, msg):
     if ctx.author.id != 650343691998855188:
         await ctx.respond("⛔ Nie masz wystarczających uprawnień :<", delete_after = .5)
     if ctx.author.id == 650343691998855188:
+        botsay = ""
+        for l in msg:
+            botsay = botsay +  "-"
+        await ctx.respond(botsay, delete_after = .0001)
         await ctx.send(msg)
         
 #clear messages command
@@ -98,7 +131,7 @@ async def clear(ctx, number):
 @bot.command()
 async def clock(ctx):
     msg = discord.Embed(title="Zegar", color=0xFFFFFF)
-    msg.set_author(name= ctx.author.name, icon_url= str(ctx.author.display_avatar))
+    msg.remove_author
     msg.set_thumbnail(url="https://mc.polishwrona.pl/clock.png")
     msg.add_field(name=time.strftime("%H:%M"), value="-------", inline=False)
     await ctx.respond(embed=msg)
