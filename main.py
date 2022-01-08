@@ -10,9 +10,6 @@ from discord.user import User
 from discord import Option
 
 #logging
-import discord
-import logging
-
 logger = logging.getLogger('discord')
 logger.setLevel(logging.INFO)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
