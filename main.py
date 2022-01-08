@@ -81,7 +81,7 @@ async def ping(ctx):
     msg.remove_author()
     secs = abs(runStarted - time.perf_counter())
     runtiming = time.strftime("%H godzin %M minut %S sekund", time.gmtime(secs))
-    msg.add_field(name='------------', value=f'Jestem online, a mój ping wynosi ``💨{round(bot.latency * 1000)} ms``\n⏰ Jestem włączony od : ``{runtiming}``', inline=False)
+    msg.add_field(name='------------', value=f'Jestem online, a mój ping wynosi ``💨{round(bot.latency * 1000)} ms``\n Jestem włączony od : ``{runtiming} ⏰``', inline=False)
     await ctx.respond(embed=msg)
 
 #info embeded command
