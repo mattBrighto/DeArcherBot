@@ -165,3 +165,5 @@
 2022-01-08 21:09:06,092:DEBUG:discord.client: Dispatching event application_command_completion
 2022-01-08 21:09:16,798:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 39.
 2022-01-08 21:09:16,939:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
+2022-01-08 21:09:58,050:DEBUG:discord.gateway: Keeping shard ID None websocket alive with sequence 39.
+2022-01-08 21:09:58,190:DEBUG:discord.gateway: For Shard ID None: WebSocket Event: {'t': None, 's': None, 'op': 11, 'd': None}
