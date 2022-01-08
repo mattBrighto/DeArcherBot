@@ -1,9 +1,5 @@
-from asyncio import events
 import datetime
-from os import remove
 import discord, time, logging
-from discord import client
-from discord import user
 from discord.ext import commands
 from discord.member import Member
 from discord.user import User
@@ -17,7 +13,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 #useful variables
-commandsNum = 9
+commandsNum = 10
 runStarted = time.perf_counter()
 bot = discord.Bot()
 UserMatt = bot.get_or_fetch_user(650343691998855188)
@@ -72,7 +68,7 @@ async def help(ctx):
     msg = discord.Embed(title='POMOC', color=0x1ABC9C, )
     msg.remove_author
     global commandsNum
-    msg.add_field(name="INFO",  value=f'Hej {ctx.author.mention}, jestem tu żeby ci pomóc. Posiadam {str(commandsNum)} komend i ciągle jestem rozwijany', inline=False)
+    msg.add_field(name="INFO",  value=f'Hej {ctx.author.mention}, jestem tu żeby ci pomóc. Posiadam ``**{str(commandsNum)}**`` komend i ciągle jestem rozwijany', inline=False)
     msg.add_field(name="Lista komend", value=f'``/help user``\n``/help profile``\n``/help eko``\n``/help music``\n``/help admin``\n``/help owner``', inline=True)
     msg.add_field(name='FAQ', value='1. Nie szukam collaba\n2. Bota można zakupić lub otrzymać bezpłatnie ode mnie\n3. Nie pisać na /contact jeżeli sprawa nie związana z botem', inline=True)
     msg.add_field(name='Linki', value='``🖥 vps`` https://mc.polishwrona.pl\n``📜 blog`` https://polishwrona.pl\n``🐈 git`` https://github.com/mattBrighto', inline=True)
