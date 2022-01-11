@@ -84,11 +84,11 @@ async def help(ctx, category: Option(str, 'Kategoria pomocy - różne komendy po
 #ping embeded command
 @bot.command(name='ping', description='Komenda do sprawdzenia połączenia bota')
 async def ping(ctx):
-    msg = discord.Embed(title="PING Request", color=0xE06666)
+    msg = discord.Embed(color=0xE06666)
     msg.remove_author()
     secs = abs(runStarted - time.perf_counter())
     runtiming = time.strftime("%H godzin %M minut %S sekund", time.gmtime(secs))
-    msg.add_field(name='------------', value=f'Jestem online, a mój ping wynosi ``{round(bot.latency * 1000)} ms 💨``\n Jestem włączony od : ``{runtiming} ⏰``', inline=False)
+    msg.add_field(name='PING Request', value=f'Jestem online, a mój ping wynosi ``{round(bot.latency * 1000)} ms 💨``\n Jestem włączony od : ``{runtiming} ⏰``', inline=False)
     await ctx.respond(embed=msg)
 
 #info embeded command
@@ -96,7 +96,7 @@ async def ping(ctx):
 async def info(ctx):
     msg = discord.Embed(color=0x9C1ABC)
     msg.remove_author()
-    msg.add_field(name='Basic Info', value=f'Hej jestem {meMention}. Zrobiłem tego bota For Fun, ale jeśli chciałbyś, abym wykonał jakiś projekt informatyczny/programistyczny skorzystaj z komendy /kontakt żeby się ze mną skontaktować', inline=True)
+    msg.add_field(name='Podstawowe informacje', value=f'Hej jestem {meMention}. Zrobiłem tego bota For Fun, ale jeśli chciałbyś, abym wykonał jakiś projekt informatyczny/programistyczny skorzystaj z komendy /kontakt żeby się ze mną skontaktować', inline=True)
     secs = abs(runStarted - time.perf_counter())
     runtiming = time.strftime("%H:%M:%S", time.gmtime(secs))
     msg.add_field(name='Info Bota', value=f'runtime:   ``{runtiming} ⏰ ``\nping :	``{round(bot.latency * 1000)}  ms 💨 ``', inline=True)
