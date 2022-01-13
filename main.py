@@ -11,7 +11,7 @@ from discord.ui import View
 commandsNum = 12
 meMention = '<@650343691998855188>'
 runStarted = time.perf_counter()
-bot = discord.Bot(description=f'Awesome Bot made by {meMention}', debug_guilds=[919436076081381386])
+bot = discord.Bot(description=f'Awesome Bot made by {meMention}', debug_guilds=[919436076081381386, 804279483192311809])
 
 #getting token
 file = open('Z:/token.txt', "r")
@@ -56,7 +56,7 @@ async def help(ctx, category: Option(str, 'Kategoria pomocy - różne komendy po
     
     async def userback(interaction):
         msg = discord.Embed(color=0x1ABC9C)
-        msg.add_field(name='Komendy użytkownika', value=' \n\n``/help <kategoria>`` - Pomoc\n\n``/ping`` - Sprawdza ping i połączenie bota\n``/info`` - Pokazuje informacje dotyczące bota\n\n``/kontakt <wiadomość>`` - Komenda do kontaktowania się z twórcą bota\n\n``/clock`` - Pokazuje aktualny czas w Polsce')
+        msg.add_field(name='Komendy użytkownika', value=' \n\n``/help <kategoria>`` - Pomoc\n\n``/ping`` - Sprawdza ping i połączenie bota\n``/info`` - Pokazuje informacje dotyczące bota\n\n``/kontakt <wiadomość>`` - Komenda do kontaktowania się z twórcą bota\n\n``/zegar`` - Pokazuje aktualny czas w Polsce')
         await interaction.response.send_message(embed=msg)
     
     async def adminback(interaction):
@@ -129,7 +129,8 @@ async def contact(ctx, msg: Option(str, "Twoja wiadomość", Required=False, def
 async def clock(ctx):
     msg = discord.Embed(title="Zegar", color=0xFFFFFF)
     msg.remove_author
-    msg.set_thumbnail(url="https://mc.polishwrona.pl/clock.png")
+    url=time.strftime('https://mc.polishwrona.pl/full/%H_%M.png')
+    msg.set_thumbnail(url=url)
     msg.add_field(name=time.strftime("%H:%M"), value="-------", inline=False)
     await ctx.respond(embed=msg)
 
