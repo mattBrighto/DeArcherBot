@@ -188,7 +188,7 @@ async def clock(ctx):
 #
 
 #clear messages command
-@bot.command(name='clear', description='Komenda służąca do czyszczenia chatu (Domyślnie 1000)')
+@bot.command(name='clear', description='Komenda służąca do czyszczenia chatu')
 async def clear(ctx, number: Option(int, required=False, default='-1112022')):
     if type(number) == str:
         msg = discord.Embed(color=0xFFFFFF)
