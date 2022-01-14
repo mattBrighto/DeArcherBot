@@ -163,7 +163,7 @@ async def contact(ctx, msg: Option(str, "Twoja wiadomość", required=False, def
     msg_dm = discord.Embed(color=discord.Color.gold())
     msg_dm.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
     msg_dm.add_field(name='Nowa wiadomość', value=msg)
-    msg_dm.set_footer(text=f'||{ctx.author.mention}||')
+    msg_dm.add_field(name='Kto:', value=f'``OD : ``    ||{ctx.author.mention}||')
     await dm.send(embed=msg_dm)
     respon = discord.Embed(color=discord.Color.green())
     respon.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
