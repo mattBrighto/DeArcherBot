@@ -61,7 +61,7 @@ async def limit_contact(id, ctx):
             print(limited_users)
             return
         else:
-            respon = discord.Embed(color=discord.Color.dark_grey)
+            respon = discord.Embed(color=discord.Color.dark_grey())
             respon.remove_author()
             respon.add_field(name='Błąd', value='Musisz poczekać zanim wyślesz kolejną wiadomość')
             await ctx.respond(embed=respon, delete_after=1)
@@ -79,7 +79,7 @@ bot.loop.create_task(status_ch())
 
 @bot.command(name='help', description='Komenda pomocy')
 async def help(ctx, category: Option(str, 'Kategoria pomocy - różne komendy posortowane', required=False)):
-    msg = discord.Embed(color=discord.Color.teal)
+    msg = discord.Embed(color=discord.Color.teal())
     msg.remove_author
     global commandsNum
     msg.add_field(name="Inofrmacje",  value=f'Hej {ctx.author.mention}, jestem tu żeby ci pomóc. Posiadam ``{str(commandsNum)}`` komend i ciągle jestem rozwijany', inline=False)
@@ -94,17 +94,17 @@ async def help(ctx, category: Option(str, 'Kategoria pomocy - różne komendy po
     ownerton = Button(label='Owner', style=discord.ButtonStyle.grey, emoji='👑')
     
     async def userback(interaction):
-        msg = discord.Embed(color=discord.Color.teal)
+        msg = discord.Embed(color=discord.Color.teal())
         msg.add_field(name='Komendy użytkownika', value=' \n\n``/help <kategoria>`` - Pomoc\n\n``/ping`` - Sprawdza ping i połączenie bota\n``/info`` - Pokazuje informacje dotyczące bota\n\n``/kontakt <wiadomość>`` - Komenda do kontaktowania się z twórcą bota\n\n``/zegar`` - Pokazuje aktualny czas w Polsce')
         await interaction.response.send_message(embed=msg)
     
     async def adminback(interaction):
-        msg = discord.Embed(color=discord.Color.teal)
+        msg = discord.Embed(color=discord.Color.teal())
         msg.add_field(name='Komendy admina', value=' \n\n``/ban <użytkownik> <powód>`` - Banuje użytkownika\n``/idban <id> <powód>`` - Banuje użytkownika po jego ID\n``/unban <użytkownik> <powód>`` - Unbanuje użytkownika\n``/idunban <id> <powód>`` - Unbanuje użytkownika po jego ID\n\n``/clear <ilość_wiadomości>`` - Usuwa wiadomości z kanału')
         await interaction.response.send_message(embed=msg)
 
     async def ownerback(interaction):
-        msg = discord.Embed(color=discord.Color.teal)
+        msg = discord.Embed(color=discord.Color.teal())
         msg.add_field(name='Komendy ownera', value=' \n\n``/logout`` - Wyłącza bota\n\n``/say <wiadomość>`` - Bot wysyła podaną wiadomość (Wysyłamy wiadomość jako bot)')
         await interaction.response.send_message(embed=msg)
 
@@ -123,7 +123,7 @@ async def help(ctx, category: Option(str, 'Kategoria pomocy - różne komendy po
 #ping embeded command
 @bot.command(name='ping', description='Komenda do sprawdzenia połączenia bota')
 async def ping(ctx):
-    msg = discord.Embed(color=discord.Color.nitro_pink)
+    msg = discord.Embed(color=discord.Color.nitro_pink())
     msg.remove_author()
     secs = abs(runStarted - time.perf_counter())
     runtiming = time.strftime("%H godzin %M minut %S sekund", time.gmtime(secs))
@@ -133,7 +133,7 @@ async def ping(ctx):
 #info embeded command
 @bot.command(name='info', description='Komenda informacji o bocie i jego twórcy')  
 async def info(ctx):
-    msg = discord.Embed(color=discord.Color.magenta)
+    msg = discord.Embed(color=discord.Color.magenta())
     msg.remove_author()
     msg.add_field(name='Podstawowe informacje', value=f'Hej jestem {meMention}. Zrobiłem tego bota For Fun, ale jeśli chciałbyś, abym wykonał jakiś projekt informatyczny/programistyczny skorzystaj z komendy /kontakt żeby się ze mną skontaktować', inline=True)
     secs = abs(runStarted - time.perf_counter())
@@ -156,12 +156,12 @@ async def contact(ctx, msg: Option(str, "Twoja wiadomość", required=False, def
     await limit_contact(ctx.author.id, ctx)
     global meUser
     dm = await meUser.create_dm()
-    msg_dm = discord.Embed(color=discord.Color.gold)
+    msg_dm = discord.Embed(color=discord.Color.gold())
     msg_dm.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
     msg_dm.add_field(name='Nowa wiadomość', value=msg)
     msg_dm.set_footer(text=f'||{ctx.author.mention}||')
     await dm.send(embed=msg_dm)
-    respon = discord.Embed(color=discord.Color.green)
+    respon = discord.Embed(color=discord.Color.green())
     respon.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
     respon.add_field(name='Wiadomość wysłana', value=f"||{ctx.author.mention}|| Twoja wiadomość została wysłana ✅")
     await ctx.respond(embed=respon, delete_after=1)
@@ -195,7 +195,7 @@ async def clear(ctx, number: Option(int, required=False, default='-1112022')):
         await ctx.respond(embed=msg)
         return
     x = len(await ctx.channel.purge(limit=number))
-    respon = discord.Embed(color=discord.Color.red)
+    respon = discord.Embed(color=discord.Color.red())
     respon.remove_author()
     respon.add_field(name='Operacja wykonana', value=f'❌ Pomyślnie usunięto {x} wiadomości!')
     await ctx.respond(embed=respon, delete_after = .5)
@@ -215,17 +215,17 @@ async def ban(ctx, user: Option(Member, 'Użytkownik do zbanowania',  required=F
     try:
         await who.send(f'||{who.mention}||')
     except:
-        ifmsg = discord.Embed(color=discord.Color.dark_grey)
+        ifmsg = discord.Embed(color=discord.Color.dark_grey())
         ifmsg.remove_author()
         ifmsg.add_field(name='Błąd', value='Nie mogę napisać do użytkownika... Możliwe ,że nie ma go na serwerze lub nie dzielimy żadnych serwerów, ale i tak go zbanuję')
         await ctx.author.send(embed=ifmsg, delete_after=2)
     else:
-        dmMsg = discord.Embed(title='BAN', color=discord.Color.red)
+        dmMsg = discord.Embed(title='BAN', color=discord.Color.red())
         dmMsg.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
         dmMsg.add_field(name=f'🔨 {who.display_name} zostałxś zbanowany 🔨', value=f'Zbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód bana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
         await who.send(embed=dmMsg)
     await ctx.guild.ban(user=who, delete_message_days=0, reason=rsn)
-    msg = discord.Embed(title='BAN', color=discord.Color.red)
+    msg = discord.Embed(title='BAN', color=discord.Color.red())
     msg.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
     msg.add_field(name=f'🔨 Użytkownik {who.display_name} został zbanowany 🔨', value=f'Zbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód bana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
     await ctx.respond(embed=msg)
@@ -245,17 +245,17 @@ async def idban(ctx, id: Option(int, 'ID użytkownika do zbanowania', required=F
     try:
         await who.send(f'||{who.mention}||')
     except:
-        ifmsg = discord.Embed(color=discord.Color.dark_grey)
+        ifmsg = discord.Embed(color=discord.Color.dark_grey())
         ifmsg.remove_author()
         ifmsg.add_field(name='Błąd', value='Nie mogę napisać do użytkownika... Możliwe ,że nie ma go na serwerze lub nie dzielimy żadnych serwerów, ale i tak go zbanuję')
         await ctx.author.send(embed=ifmsg, delete_after=2)
     else:
-        dmMsg = discord.Embed(title='BAN', color=discord.Color.red)
+        dmMsg = discord.Embed(title='BAN', color=discord.Color.red())
         dmMsg.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
         dmMsg.add_field(name=f'🔨 {who.display_name} zostałxś zbanowany 🔨', value=f'Zbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód bana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
         await who.send(embed=dmMsg)
     await ctx.guild.ban(user=who, delete_message_days=0, reason=rsn)
-    msg = discord.Embed(title='BAN', color=discord.Color.red)
+    msg = discord.Embed(title='BAN', color=discord.Color.red())
     msg.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
     msg.add_field(name=f'🔨 Użytkownik {who.display_name} został zbanowany 🔨', value=f'Zbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód bana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
     await ctx.respond(embed=msg)
@@ -274,7 +274,7 @@ async def unban(ctx, user: Option(Member, 'Użytkownik do odbanowania', required
         return
     who = await bot.fetch_user(user)
     await ctx.guild.unban(user=who,reason=rsn)
-    msg = discord.Embed(title='UNBAN', color=discord.Color.light_grey)
+    msg = discord.Embed(title='UNBAN', color=discord.Color.light_grey())
     msg.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
     msg.add_field(name=f'🔨 Użytkownik {who.display_name} został obanowany 🔨', value=f'Odbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód unbana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
     await ctx.respond(embed=msg)
@@ -291,7 +291,7 @@ async def idunban(ctx, user: Option(int, 'Użytkownik do odbanowania',required=F
         return
     who = await bot.fetch_user(user)
     await ctx.guild.unban(user=who,reason=rsn)
-    msg = discord.Embed(title='UNBAN', color=discord.Color.light_grey)
+    msg = discord.Embed(title='UNBAN', color=discord.Color.light_grey())
     msg.set_author(name=ctx.author.name, icon_url=str(ctx.author.display_avatar))
     msg.add_field(name=f'🔨 Użytkownik {who.display_name} został obanowany 🔨', value=f'Odbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód unbana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
     await ctx.respond(embed=msg)
@@ -308,7 +308,7 @@ async def idunban(ctx, user: Option(int, 'Użytkownik do odbanowania',required=F
 @bot.command(name='logout', desciption='Komenda służąca do wyłączenia bota')
 async def logout(ctx):
     if ctx.author.id != 650343691998855188:
-        respon = discord.Embed(color=discord.Color.dark_grey)
+        respon = discord.Embed(color=discord.Color.dark_grey())
         respon.remove_author()
         respon.add_field(name='Błąd uprawnień', value='Nie masz wystarczających uprawnień')
         await ctx.respond(embed=respon, delete_after=.5)
@@ -334,7 +334,7 @@ async def say(ctx, msg: Option(str, 'Wiadomość, którą bot ma wysłać', requ
         await ctx.respond(embed=msg)
         return
     if ctx.author.id != 650343691998855188:
-        respon = discord.Embed(color=discord.Color.dark_grey)
+        respon = discord.Embed(color=discord.Color.dark_grey())
         respon.remove_author()
         respon.add_field(name='Błąd uprawnień', value='Nie masz wystarczających uprawnień')
         await ctx.respond(embed=respon, delete_after=.5)
