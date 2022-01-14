@@ -143,7 +143,7 @@ async def info(ctx):
     secs = abs(runStarted - time.perf_counter())
     runtiming = time.strftime("%H:%M:%S", time.gmtime(secs))
     msg.add_field(name='Info Bota', value=f'runtime:   ``{runtiming} ⏰ ``\nping :	``{round(bot.latency * 1000)}  ms 💨 ``\nserwery :  ``{len(bot.guilds)} 🖥 ``\ndeveloper/owner :  {meMention}\nkod dostępny na ``githubie``', inline=True)
-    msg.add_field(name='Linki', value='``🔗 PERSONAL SITE``   https://mc.polishwrona.pl/\n``🐈 GitHub Bota``     https://github.com/mattBrighto/dearcherbot``\n``📷 Instagram``     https://instagram.com/mattbrighto/', inline=False)
+    msg.add_field(name='Linki', value='``🔗 PERSONAL SITE``   https://mc.polishwrona.pl/\n``🐈 GitHub Bota``     https://github.com/mattBrighto/dearcherbot\n``📷 Instagram``     https://instagram.com/mattbrighto/', inline=False)
     await ctx.respond(embed=msg)
 
 #contact limited command
