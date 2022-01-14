@@ -1,3 +1,4 @@
+from os import name
 import discord, time, datetime, random, asyncio
 from discord.member import Member
 from discord import Intents, Option
@@ -42,11 +43,14 @@ async def status_ch():
         await bot.change_presence(status=discord.Status.do_not_disturb, activity=discord.Activity(type=discord.ActivityType.playing, name=status))
         await asyncio.sleep(3)
 
-async def del_limit(id):
+async def del_limit(id, ctx):
     global limited_users
     await asyncio.sleep(60)
     limited_users.remove(id)
     print('deleted user '+str(id))
+    msg = discord.Embed(color=discord.Color.gold())
+    msg.add_field(name='Czas minął',  value='Możesz wysłać kolejną wiadomość kontaktową przy użyciu /kontakt')
+    await ctx.author.send(embed = msg)
     return
 
 
@@ -57,7 +61,7 @@ async def limit_contact(id, ctx):
     while not bot.is_closed():
         if id not in limited_users:
             limited_users.append(id)
-            bot.loop.create_task(del_limit(id))
+            bot.loop.create_task(del_limit(id, ctx))
             print(limited_users)
             return
         else:
