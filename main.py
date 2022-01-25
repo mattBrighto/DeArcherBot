@@ -1,7 +1,7 @@
-from os import name
 import discord, time, datetime, random, asyncio
 from discord.member import Member
 from discord import Intents, Option
+from discord.ext import commands
 from discord.ui import Button
 from discord.ui import View
 
@@ -10,7 +10,7 @@ commandsNum = 12
 limited_users = []
 meMention = '<@650343691998855188>'
 runStarted = time.perf_counter()
-bot = discord.Bot(description=f'Awesome Bot made by {meMention}', debug_guilds=[919436076081381386, 804279483192311809])
+bot = commands.Bot(command_prefix='?', debug_guilds=[919436076081381386, 804279483192311809])
 
 #getting token
 file = open('/home/debian/token.txt', "r")
@@ -81,7 +81,7 @@ bot.loop.create_task(status_ch())
 
 #help command... tho needs upgrade
 
-@bot.command(name='help', description='Komenda pomocy')
+@bot.slash_command(name='help', description='Komenda pomocy')
 async def help(ctx, category: Option(str, 'Kategoria pomocy - różne komendy posortowane', required=False)):
     msg = discord.Embed(color=discord.Color.teal())
     msg.remove_author
@@ -125,7 +125,7 @@ async def help(ctx, category: Option(str, 'Kategoria pomocy - różne komendy po
     await ctx.respond(embed=msg, view=view)
 
 #ping embeded command
-@bot.command(name='ping', description='Komenda do sprawdzenia połączenia bota')
+@bot.slash_command(name='ping', description='Komenda do sprawdzenia połączenia bota')
 async def ping(ctx):
     msg = discord.Embed(color=discord.Color.nitro_pink())
     msg.remove_author()
@@ -135,7 +135,7 @@ async def ping(ctx):
     await ctx.respond(embed=msg)
 
 #info embeded command
-@bot.command(name='info', description='Komenda informacji o bocie i jego twórcy')  
+@bot.slash_command(name='info', description='Komenda informacji o bocie i jego twórcy')  
 async def info(ctx):
     msg = discord.Embed(color=discord.Color.magenta())
     msg.remove_author()
@@ -147,7 +147,7 @@ async def info(ctx):
     await ctx.respond(embed=msg)
 
 #contact limited command
-@bot.command(name='kontakt', description='Komenda służąca do kontaktu z twórcą bota')
+@bot.slash_command(name='kontakt', description='Komenda służąca do kontaktu z twórcą bota')
 async def contact(ctx, msg: Option(str, "Twoja wiadomość", required=False, default=-1142022)):
     if type(msg) == int:
         msg = discord.Embed(color=0xFFFFFF)
@@ -171,7 +171,7 @@ async def contact(ctx, msg: Option(str, "Twoja wiadomość", required=False, def
     await ctx.respond(embed=respon, delete_after=1)
 
 #clock command.... needs upgrade, (thumbnail is correct)
-@bot.command(name='zegar', description='Wyświetla aktualną godzinę w Polsce')
+@bot.slash_command(name='zegar', description='Wyświetla aktualną godzinę w Polsce')
 async def clock(ctx):
     msg = discord.Embed(title="Zegar", color=0xFFFFFF)
     msg.remove_author
@@ -188,7 +188,7 @@ async def clock(ctx):
 #
 
 #clear messages command
-@bot.command(name='clear', description='Komenda służąca do czyszczenia chatu')
+@bot.slash_command(name='clear', description='Komenda służąca do czyszczenia chatu')
 async def clear(ctx, number: Option(int, required=False, default='-1112022')):
     if type(number) == str:
         msg = discord.Embed(color=0xFFFFFF)
@@ -205,7 +205,7 @@ async def clear(ctx, number: Option(int, required=False, default='-1112022')):
     await ctx.respond(embed=respon, delete_after = .5)
 
 #ban command
-@bot.command(name='ban', description='Banuje podanego użytkownika')
+@bot.slash_command(name='ban', description='Banuje podanego użytkownika')
 async def ban(ctx, user: Option(Member, 'Użytkownik do zbanowania',  required=False, default='-1112022'), rsn: Option(str, 'Powód bana', required=False, default='Nie określono')):
     if type(user) == str:
         msg = discord.Embed(color=0xFFFFFF)
@@ -235,7 +235,7 @@ async def ban(ctx, user: Option(Member, 'Użytkownik do zbanowania',  required=F
     await ctx.respond(embed=msg)
 
 #idban command
-@bot.command(name='idban', description='Banuje podanego użytkownika po id')
+@bot.slash_command(name='idban', description='Banuje podanego użytkownika po id')
 async def idban(ctx, id: Option(int, 'ID użytkownika do zbanowania', required=False, default='-1112022'), rsn: Option(str, 'Powód bana', required=False, default='Nie określono')):
     if type(id) == str:
         msg = discord.Embed(color=0xFFFFFF)
@@ -266,7 +266,7 @@ async def idban(ctx, id: Option(int, 'ID użytkownika do zbanowania', required=F
 
 
 #unban command
-@bot.command(name='unban',desctiption='Unbanuje użytkownika')
+@bot.slash_command(name='unban',desctiption='Unbanuje użytkownika')
 async def unban(ctx, user: Option(Member, 'Użytkownik do odbanowania', required=False, default='-1112022'), rsn: Option(str, 'Powód unbana', required=False, default='Nie określono')):
     if type(user) == str:
         msg = discord.Embed(color=0xFFFFFF)
@@ -283,7 +283,7 @@ async def unban(ctx, user: Option(Member, 'Użytkownik do odbanowania', required
     msg.add_field(name=f'🔨 Użytkownik {who.display_name} został obanowany 🔨', value=f'Odbanowany przez : {ctx.author.mention}\nZbanowany użytkownik : {who.mention}\nPowód unbana : ``{rsn}``\nData : ``{datetime.datetime.now()}``', inline=True)
     await ctx.respond(embed=msg)
 
-@bot.command(name='idunban',desctiption='Unbanuje użytkownika')
+@bot.slash_command(name='idunban',desctiption='Unbanuje użytkownika')
 async def idunban(ctx, user: Option(int, 'Użytkownik do odbanowania',required=False, default='-1112022'), rsn: Option(str, 'Powód unbana', required=False, default='Nie określono')):
     if type(id) == str:
         msg = discord.Embed(color=0xFFFFFF)
@@ -309,7 +309,7 @@ async def idunban(ctx, user: Option(int, 'Użytkownik do odbanowania',required=F
 #
 
 #logout owner command
-@bot.command(name='logout', desciption='Komenda służąca do wyłączenia bota')
+@bot.slash_command(name='logout', desciption='Komenda służąca do wyłączenia bota')
 async def logout(ctx):
     if ctx.author.id != 650343691998855188:
         respon = discord.Embed(color=discord.Color.dark_grey())
@@ -327,7 +327,7 @@ async def logout(ctx):
         await discord.Client.close(bot)
 
 #say owner command
-@bot.command(name='say', description='Komenda służąca do kontrolowania wiadomości bota')
+@bot.slash_command(name='say', description='Komenda służąca do kontrolowania wiadomości bota')
 async def say(ctx, msg: Option(str, 'Wiadomość, którą bot ma wysłać', required=False, default=True)):
     if type(msg) == bool:
         msg = discord.Embed(color=0xFFFFFF)
